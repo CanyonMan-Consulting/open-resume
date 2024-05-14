@@ -35,7 +35,7 @@ export const ResumePDF = ({
   resume: Resume;
   settings: Settings;
   isPDF?: boolean;
-  privateView: boolean;
+  privateView?: boolean;
 }) => {
   const { profile, workExperiences, educations, projects, skills, custom } =
     resume;
@@ -59,7 +59,7 @@ export const ResumePDF = ({
         heading={formToHeading["workExperiences"]}
         workExperiences={workExperiences}
         themeColor={themeColor}
-        privateView={privateView}
+        privateView={privateView || true}
       /> : <></>
     ),
     educations: () => (resume?.educations?.length > 0 ?

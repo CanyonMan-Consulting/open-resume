@@ -20,7 +20,8 @@ import { Resume } from "lib/redux/types";
 import { useAddResumeToUser, useAppSelector, useGetResume, useUpdateResume } from "lib/redux/hooks";
 import { Button } from "components/Button";
 import { Resume as ResumeViewer } from "components/Resume";
-import { selectResume } from "lib/redux/resumeSlice";
+import { initialResumeState, selectResume } from "lib/redux/resumeSlice";
+import { initialSettings } from "lib/redux/settingsSlice";
 
 
 export default function ResumeParser() {
@@ -80,7 +81,7 @@ export default function ResumeParser() {
 
   useEffect(() => {
     if (resume && resume?.workExperiences?.length !== 0) {
-      saveStateToLocalStorage({ resume: resume })
+      saveStateToLocalStorage({ resume: resume, settings: initialSettings })
       setShowForm(true)
     }
     if (resumeId === 0) {
@@ -114,20 +115,20 @@ export default function ResumeParser() {
 
   }, [resumeInDatabase, resumeInDatabaseFromQuery, resumeInDatabaseAfterUpdate])
 
-  const handleAddClick = (e) => {
+  const handleAddClick = (e: any) => {
     if (!resumeTitle || resumeTitle.trim() === '') {
       alert('Resume Title required');
       return false;
     }
     setShowOriginal(false)
     addResumeToUser({
-      user_id: user_id, resume_title: resumeTitle, resume
+      user_id: user_id, resume_title: resumeTitle, resume: resume || initialResumeState
     })
   }
 
-  const AddUpdateButton = (props: { setResume: any }) => {
+  const AddUpdateButton = () => {
     const updatedResume = useAppSelector(selectResume);
-    const handleUpdateClick = (e) => {
+    const handleUpdateClick = (e: any) => {
       if (!resumeTitle || resumeTitle.trim() === '') {
         alert('Resume Title required');
         return false;

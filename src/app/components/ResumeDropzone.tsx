@@ -12,6 +12,7 @@ import addPdfSrc from "public/assets/add-pdf.svg";
 import Image from "next/image";
 import { cx } from "lib/cx";
 import { deepClone } from "lib/deep-clone";
+import { initialResumeState } from "lib/redux/resumeSlice";
 
 const defaultFileState = {
   name: "",
@@ -69,7 +70,7 @@ export const ResumeDropzone = ({
   const onRemove = () => {
     console.log('onRemove')
     setFile(defaultFileState);
-    saveStateToLocalStorage({})
+    saveStateToLocalStorage({ resume: initialResumeState, settings: initialSettings })
     onFileUrlChange('');
   };
 

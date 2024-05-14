@@ -9,7 +9,7 @@ import { useSearchParams } from "next/navigation";
 import { Resume } from "lib/redux/types";
 import { saveStateToLocalStorage } from "lib/redux/local-storage";
 import { ResumePDF } from "components/Resume/ResumePDF";
-import { Settings } from "lib/redux/settingsSlice";
+import { Settings, initialSettings } from "lib/redux/settingsSlice";
 
 export default function Create() {
   const searchParams = useSearchParams();
@@ -55,7 +55,7 @@ export default function Create() {
   useEffect(() => {
     if (searchParams.get('resume-id') && resumeInDatabaseFromQuery && resumeInDatabaseFromQuery?.resume_id) {
       setResume(resumeInDatabaseFromQuery.resume_file_json_document)
-      saveStateToLocalStorage({ resume: resumeInDatabaseFromQuery.resume_file_json_document })
+      saveStateToLocalStorage({ resume: resumeInDatabaseFromQuery.resume_file_json_document, settings: initialSettings })
     }
   }, [resumeInDatabaseFromQuery])
 

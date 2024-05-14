@@ -34,7 +34,7 @@ export const ResumeForm = (props: { resumeTitle: string, setResumeTitle: any }) 
   const formsOrder = useAppSelector(selectFormsOrder);
   const [isHover, setIsHover] = useState(false);
   // const [resumeTitle, setResumeTitle] = useState('')
-  const handleTitleChange = (e, f) => {
+  const handleTitleChange = (e: any, f: any) => {
     console.log('e', e, f)
     props.setResumeTitle(f)
   }
@@ -56,7 +56,7 @@ export const ResumeForm = (props: { resumeTitle: string, setResumeTitle: any }) 
           onChange={handleTitleChange}
         />
         <ProfileForm />
-        {formsOrder.map((form) => {
+        {formsOrder.map((form: ShowForm) => {
           const Component = formTypeToComponent[form];
           return <Component key={form} />;
         })}

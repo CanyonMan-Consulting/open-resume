@@ -1,5 +1,5 @@
 {
-  "name": "open-resume",
+  "name": "inplaay-resume",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "test": "jest --watch",
-    "test:ci": "jest --ci"
+    "test:ci": "jest --ci",
+    "docker": "docker build -t chrisatyler/inplaay-resume . && docker push chrisatyler/inplaay-resume"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.18",

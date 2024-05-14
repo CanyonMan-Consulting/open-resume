@@ -8,10 +8,14 @@ export type ResumeInDatabase = {
   resume_file_id: string,
   resume_file_json_document: Resume
 }
-
+let backendHost = 'https://localhost';
+if (typeof window !== "undefined") {
+  const hostname = window && window.location && window.location.hostname;
+  if (hostname === 'app.inplaay.com') backendHost = 'https://app.inplaay.com'
+}
 export async function addResumeToUser(user_id: number, resume_title: string, resume: Resume): Promise<ResumeInDatabase> {
   const config: AxiosRequestConfig = {
-    baseURL: 'http://localhost:3000/api',
+    baseURL: `${backendHost}/api`,
     url: '/resumes',
     method:'POST',
     data: {
@@ -26,7 +30,7 @@ export async function addResumeToUser(user_id: number, resume_title: string, res
 
 export async function updateResume(user_id: number, resume_title: string, resume_id: number, resume: Resume): Promise<ResumeInDatabase> {
   const config: AxiosRequestConfig = {
-    baseURL: 'http://localhost:3000/api',
+    baseURL: `${backendHost}/api`,
     url: `/resumes/${resume_id}`,
     method:'PUT',
     data: {
@@ -41,7 +45,7 @@ export async function updateResume(user_id: number, resume_title: string, resume
 
 export async function getResume(user_id: number, resume_id: number): Promise<ResumeInDatabase> {
   const config: AxiosRequestConfig = {
-    baseURL: 'http://localhost:3000/api',
+    baseURL: `${backendHost}/api`,
     url: `/resumes/${resume_id}`,
     method:'GET',
   }

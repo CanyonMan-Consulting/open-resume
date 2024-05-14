@@ -199,8 +199,13 @@ export default function ResumeParser() {
                 "flex justify-center scrollbar scrollbar-track-gray-100 scrollbar-w-3 md:h-[calc(100vh-var(--top-nav-bar-height))] md:justify-end md:overflow-y-scroll",
                 isHover && "scrollbar-thumb-gray-200"
               )} style={{ minWidth: '700px' }}>
-                <ResumeViewer privateView={privateView} setPrivateView={setPrivateView} />
-                <FlexboxSpacer maxWidth={45} className="hidden md:block" />
+                <section className="max-w-[600px] grow">
+                  <Heading level={2} className="!mt-[1.2em]">
+                    View your resume
+                  </Heading>
+                  <ResumeViewer privateView={privateView} setPrivateView={setPrivateView} />
+                  <FlexboxSpacer maxWidth={45} className="hidden md:block" />
+                </section>
               </div>
             </Provider>
           )

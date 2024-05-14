@@ -1,7 +1,7 @@
 import "globals.css";
 import { TopNavBar } from "components/TopNavBar";
 import { Analytics } from "@vercel/analytics/react";
-
+import { ReactQueryClientProvider } from "components/ReactQueryClientProvider";
 export const metadata = {
   title: "OpenResume - Free Open-source Resume Builder and Parser",
   description:
@@ -14,12 +14,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body>
-        <TopNavBar />
-        {children}
-        <Analytics />
-      </body>
-    </html>
+    <ReactQueryClientProvider>
+      <html lang="en">
+        <body style={{ maxHeight: '100vh', textAlign: 'left', overflow: 'hidden' }}>
+          {children}
+        </body>
+      </html >
+    </ReactQueryClientProvider>
   );
 }

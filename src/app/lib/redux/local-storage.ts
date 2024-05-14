@@ -15,6 +15,7 @@ export const loadStateFromLocalStorage = () => {
 };
 
 export const saveStateToLocalStorage = (state: RootState) => {
+  console.log('saving state',state)
   try {
     const stringifiedState = JSON.stringify(state);
     localStorage.setItem(LOCAL_STORAGE_KEY, stringifiedState);

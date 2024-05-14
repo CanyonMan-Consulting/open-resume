@@ -16,15 +16,13 @@ import {
   useRegisterReactPDFHyphenationCallback,
 } from "components/fonts/hooks";
 import { NonEnglishFontsCSSLazyLoader } from "components/fonts/NonEnglishFontsCSSLoader";
+import { cx } from "lib/cx";
 
-export const Resume = () => {
+export const Resume = (props: { privateView: boolean, setPrivateView: any }) => {
   const [scale, setScale] = useState(0.8);
   const resume = useAppSelector(selectResume);
   const settings = useAppSelector(selectSettings);
-  const document = useMemo(
-    () => <ResumePDF resume={resume} settings={settings} isPDF={true} />,
-    [resume, settings]
-  );
+  const [isHover, setIsHover] = useState(false);
 
   useRegisterReactPDFFont();
   useRegisterReactPDFHyphenationCallback(settings.fontFamily);
@@ -35,29 +33,19 @@ export const Resume = () => {
       <div className="relative flex justify-center md:justify-start">
         <FlexboxSpacer maxWidth={50} className="hidden md:block" />
         <div className="relative">
-          <section className="h-[calc(100vh-var(--top-nav-bar-height)-var(--resume-control-bar-height))] overflow-hidden md:p-[var(--resume-padding)]">
-            <ResumeIframeCSR
-              documentSize={settings.documentSize}
-              scale={scale}
-              enablePDFViewer={DEBUG_RESUME_PDF_FLAG}
-            >
-              <ResumePDF
-                resume={resume}
-                settings={settings}
-                isPDF={DEBUG_RESUME_PDF_FLAG}
-              />
-            </ResumeIframeCSR>
-          </section>
-          <ResumeControlBarCSR
-            scale={scale}
-            setScale={setScale}
-            documentSize={settings.documentSize}
-            document={document}
-            fileName={resume.profile.name + " - Resume"}
-          />
+          <div className={cx(
+            "flex justify-center scrollbar scrollbar-track-gray-100 scrollbar-w-3 md:h-[calc(100vh-var(--top-nav-bar-height))] md:justify-end md:overflow-y-scroll",
+            isHover && "scrollbar-thumb-gray-200"
+          )}>
+            <ResumePDF
+              resume={resume}
+              settings={settings}
+              isPDF={DEBUG_RESUME_PDF_FLAG}
+              privateView={props.privateView}
+            />
+          </div>
         </div>
-        <ResumeControlBarBorder />
-      </div>
+      </div >
     </>
   );
 };

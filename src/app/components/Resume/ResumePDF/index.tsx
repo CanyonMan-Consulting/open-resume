@@ -30,10 +30,12 @@ export const ResumePDF = ({
   resume,
   settings,
   isPDF = false,
+  privateView,
 }: {
   resume: Resume;
   settings: Settings;
   isPDF?: boolean;
+  privateView: boolean;
 }) => {
   const { profile, workExperiences, educations, projects, skills, custom } =
     resume;
@@ -52,43 +54,44 @@ export const ResumePDF = ({
   const showFormsOrder = formsOrder.filter((form) => formToShow[form]);
 
   const formTypeToComponent: { [type in ShowForm]: () => JSX.Element } = {
-    workExperiences: () => (
+    workExperiences: () => (resume?.workExperiences?.length > 0 ?
       <ResumePDFWorkExperience
         heading={formToHeading["workExperiences"]}
         workExperiences={workExperiences}
         themeColor={themeColor}
-      />
+        privateView={privateView}
+      /> : <></>
     ),
-    educations: () => (
+    educations: () => (resume?.educations?.length > 0 ?
       <ResumePDFEducation
         heading={formToHeading["educations"]}
         educations={educations}
         themeColor={themeColor}
         showBulletPoints={showBulletPoints["educations"]}
-      />
+      /> : <></>
     ),
-    projects: () => (
+    projects: () => (resume?.projects?.length > 0 ?
       <ResumePDFProject
         heading={formToHeading["projects"]}
         projects={projects}
         themeColor={themeColor}
-      />
+      /> : <></>
     ),
-    skills: () => (
+    skills: () => (resume?.skills?.descriptions?.length > 0 ?
       <ResumePDFSkills
         heading={formToHeading["skills"]}
         skills={skills}
         themeColor={themeColor}
         showBulletPoints={showBulletPoints["skills"]}
-      />
+      /> : <></>
     ),
-    custom: () => (
+    custom: () => (!!resume?.custom ?
       <ResumePDFCustom
         heading={formToHeading["custom"]}
         custom={custom}
         themeColor={themeColor}
         showBulletPoints={showBulletPoints["custom"]}
-      />
+      /> : <></>
     ),
   };
 
@@ -119,11 +122,13 @@ export const ResumePDF = ({
               padding: `${spacing[0]} ${spacing[20]}`,
             }}
           >
-            <ResumePDFProfile
-              profile={profile}
-              themeColor={themeColor}
-              isPDF={isPDF}
-            />
+            {privateView === false &&
+              <ResumePDFProfile
+                profile={profile}
+                themeColor={themeColor}
+                isPDF={isPDF}
+              />
+            }
             {showFormsOrder.map((form) => {
               const Component = formTypeToComponent[form];
               return <Component key={form} />;

@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSetDefaultScale } from "components/Resume/hooks";
 import {
   MagnifyingGlassIcon,
@@ -14,12 +14,16 @@ const ResumeControlBar = ({
   documentSize,
   document,
   fileName,
+  privateView,
+  setPrivateView,
 }: {
   scale: number;
   setScale: (scale: number) => void;
   documentSize: string;
   document: JSX.Element;
   fileName: string;
+  privateView: boolean;
+  setPrivateView: any;
 }) => {
   const { scaleOnResize, setScaleOnResize } = useSetDefaultScale({
     setScale,
@@ -57,6 +61,15 @@ const ResumeControlBar = ({
             onChange={() => setScaleOnResize((prev) => !prev)}
           />
           <span className="select-none">Autoscale</span>
+        </label>
+        <label className="hidden items-center gap-1 lg:flex">
+          <input
+            type="checkbox"
+            className="mt-0.5 h-4 w-4"
+            checked={privateView}
+            onChange={() => setPrivateView(!privateView)}
+          />
+          <span className="select-none">See Private View</span>
         </label>
       </div>
       <a

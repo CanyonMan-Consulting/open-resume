@@ -17,6 +17,8 @@ import {
 } from "lib/redux/settingsSlice";
 import { deepMerge } from "lib/deep-merge";
 import type { Resume } from "lib/redux/types";
+import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query"
+import * as api from './apis'
 
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
@@ -57,3 +59,30 @@ export const useSetInitialStore = () => {
     }
   }, []);
 };
+
+export const useAddResumeToUser = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (args: { user_id: number, resume_title: string, resume: Resume }) => api.addResumeToUser(args.user_id, args.resume_title, args.resume),
+    onSuccess: (data) => {
+      // queryClient.invalidateQueries(['resume', { user_id: data?.user_id, resume_id: data?.resume_id }])
+    }
+  })
+}
+
+export const useUpdateResume = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (args: { user_id: number, resume_title: string, resume_id: number, resume: Resume }) => api.updateResume(args.user_id, args.resume_title, args.resume_id, args.resume),
+    onSuccess: (data) => {
+      // queryClient.invalidateQueries(['resume', { user_id: data?.user_id, resume_id: data?.resume_id }])
+    }
+  })
+}
+
+export const useGetResume = (user_id: number, resume_id: number) => {
+  return useQuery({
+    queryFn: async () => api.getResume(user_id, resume_id),
+    queryKey: ['resume', { user_id, resume_id }]
+  })
+}

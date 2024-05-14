@@ -15,6 +15,9 @@ import { ThemeForm } from "components/ResumeForm/ThemeForm";
 import { CustomForm } from "components/ResumeForm/CustomForm";
 import { FlexboxSpacer } from "components/FlexboxSpacer";
 import { cx } from "lib/cx";
+import { Resume } from "lib/redux/types";
+import { loadStateFromLocalStorage } from "lib/redux/local-storage";
+import { Input } from "./Form/InputGroup";
 
 const formTypeToComponent: { [type in ShowForm]: () => JSX.Element } = {
   workExperiences: WorkExperiencesForm,
@@ -24,12 +27,17 @@ const formTypeToComponent: { [type in ShowForm]: () => JSX.Element } = {
   custom: CustomForm,
 };
 
-export const ResumeForm = () => {
+export const ResumeForm = (props: { resumeTitle: string, setResumeTitle: any }) => {
   useSetInitialStore();
   useSaveStateToLocalStorageOnChange();
 
   const formsOrder = useAppSelector(selectFormsOrder);
   const [isHover, setIsHover] = useState(false);
+  // const [resumeTitle, setResumeTitle] = useState('')
+  const handleTitleChange = (e, f) => {
+    console.log('e', e, f)
+    props.setResumeTitle(f)
+  }
 
   return (
     <div
@@ -37,19 +45,22 @@ export const ResumeForm = () => {
         "flex justify-center scrollbar scrollbar-track-gray-100 scrollbar-w-3 md:h-[calc(100vh-var(--top-nav-bar-height))] md:justify-end md:overflow-y-scroll",
         isHover && "scrollbar-thumb-gray-200"
       )}
-      onMouseOver={() => setIsHover(true)}
-      onMouseLeave={() => setIsHover(false)}
     >
       <section className="flex max-w-2xl flex-col gap-8 p-[var(--resume-padding)]">
+        <Input
+          label="Resume Title"
+          labelClassName="col-span-full"
+          name="resumeTitle"
+          value={props.resumeTitle}
+          placeholder="My resume title"
+          onChange={handleTitleChange}
+        />
         <ProfileForm />
         {formsOrder.map((form) => {
           const Component = formTypeToComponent[form];
           return <Component key={form} />;
         })}
-        <ThemeForm />
-        <br />
       </section>
-      <FlexboxSpacer maxWidth={50} className="hidden md:block" />
     </div>
   );
 };

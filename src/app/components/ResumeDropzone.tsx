@@ -67,8 +67,10 @@ export const ResumeDropzone = ({
   };
 
   const onRemove = () => {
+    console.log('onRemove')
     setFile(defaultFileState);
-    onFileUrlChange("");
+    saveStateToLocalStorage({})
+    onFileUrlChange('');
   };
 
   const onImportClick = async () => {
@@ -91,7 +93,7 @@ export const ResumeDropzone = ({
     }
 
     saveStateToLocalStorage({ resume, settings });
-    router.push("/resume-builder");
+    // router.push("/resume-builder");
   };
 
   return (

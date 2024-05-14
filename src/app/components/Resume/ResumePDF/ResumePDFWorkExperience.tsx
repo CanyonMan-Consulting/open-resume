@@ -11,23 +11,27 @@ export const ResumePDFWorkExperience = ({
   heading,
   workExperiences,
   themeColor,
+  privateView,
 }: {
   heading: string;
   workExperiences: ResumeWorkExperience[];
   themeColor: string;
+  privateView: boolean;
 }) => {
   return (
     <ResumePDFSection themeColor={themeColor} heading={heading}>
-      {workExperiences.map(({ company, jobTitle, date, descriptions }, idx) => {
+      {workExperiences.map(({ company, company_type, jobTitle, date, descriptions }, idx) => {
         // Hide company name if it is the same as the previous company
         const hideCompanyName =
           idx > 0 && company === workExperiences[idx - 1].company;
 
         return (
           <View key={idx} style={idx !== 0 ? { marginTop: spacing["2"] } : {}}>
-            {!hideCompanyName && (
+            {privateView ?
+              <ResumePDFText bold={true}>{company_type}</ResumePDFText>
+              :
               <ResumePDFText bold={true}>{company}</ResumePDFText>
-            )}
+            }
             <View
               style={{
                 ...styles.flexRowBetween,

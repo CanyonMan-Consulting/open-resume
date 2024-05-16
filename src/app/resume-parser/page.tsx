@@ -65,9 +65,7 @@ export default function ResumeParser() {
   }, [])
 
   useEffect(() => {
-    console.log('useeffect on fileUrl', fileUrl, resumeUploaded)
     const test = async () => {
-      console.log('running test')
       if (fileUrl) {
         const textItems = await readPdf(fileUrl);
         setTextItems(textItems);
@@ -80,26 +78,20 @@ export default function ResumeParser() {
   }, [fileUrl]);
 
   useEffect(() => {
-    console.log('useeffect on textItems', textItems)
     let lines;
     if (textItems && textItems.length > 0) lines = groupTextItemsIntoLines(textItems)
-    console.log('extracted lines', lines)
     if (lines && lines.length > 0) setLines(lines);
   }, [textItems]);
 
   useEffect(() => {
-    console.log('useeffect on lines', lines)
     let sections;
     if (lines && lines.length > 0) sections = groupLinesIntoSections(lines);
-    console.log('extracted sections', sections)
     if (sections && Object.keys(sections).length > 0) setSections(sections)
   }, [lines])
 
   useEffect(() => {
-    console.log('useeffect on sections', sections)
     let extractedResume;
     if (sections && Object.keys(sections).length > 0) extractedResume = extractResumeFromSections(sections)
-    console.log('extracted resume', extractedResume)
     if (extractedResume && Object.keys(extractedResume).length > 0) {
       setResumeParsed(true);
       setResume(extractedResume)
@@ -107,21 +99,18 @@ export default function ResumeParser() {
   }, [sections])
 
   useEffect(() => {
-    console.log('useEffect on resume', resume, resumeParsed, resumeLoadedFromDatabase)
     // if (resume && resume?.workExperiences?.length !== 0) {
     if (resume && (resumeParsed || resumeLoadedFromDatabase)) {
       saveStateToLocalStorage({ resume: resume, settings: initialSettings })
       setShowForm(true)
     }
     if (resumeId === 0) {
-      console.log('setting original to true')
       setShowOriginal(true)
     }
   }, [resume])
 
   useEffect(() => {
     if (resumeInDatabaseFromQuery && resumeInDatabaseFromQuery?.resume_id) {
-      console.log('setting resume to database from query')
       setResume(resumeInDatabaseFromQuery.resume_file_json_document)
       setResumeId(resumeInDatabaseFromQuery?.resume_id || 0)
       setResumeTitle(resumeInDatabaseFromQuery?.resume_title || '')
@@ -132,7 +121,6 @@ export default function ResumeParser() {
 
   useEffect(() => {
     if (resumeInDatabase && resumeInDatabase?.resume_id) {
-      console.log('setting resume to database')
       setResume(resumeInDatabase?.resume_file_json_document)
       setResumeId(resumeInDatabase?.resume_id || 0)
       setResumeTitle(resumeInDatabase?.resume_title || '')
@@ -143,7 +131,6 @@ export default function ResumeParser() {
 
   useEffect(() => {
     if (resumeInDatabaseAfterUpdate && resumeInDatabaseAfterUpdate?.resume_id) {
-      console.log('setting resume to database after update')
       setResume(resumeInDatabaseAfterUpdate.resume_file_json_document)
       setResumeId(resumeInDatabaseAfterUpdate?.resume_id || 0)
       setResumeTitle(resumeInDatabaseAfterUpdate?.resume_title || '')
@@ -217,8 +204,6 @@ export default function ResumeParser() {
     return resumeId === 0 ? <Button className="btn btn-primary" onClick={handleAddClick}>Save</Button> : <Button className="btn btn-primary" onClick={handleUpdateClick}>Update</Button>
   }
 
-  console.log('resume uploaded', resumeUploaded, 'resume loaded', resumeLoadedFromDatabase)
-  console.log('show original', showOriginal, 'showForm', showForm, 'resume id', resumeId)
   return (
     <main className="h-full w-full overflow-clip" style={{ maxHeight: '100vh' }}>
       <div className="grid md:grid-cols-6 md:h-[90vh]">
@@ -252,7 +237,6 @@ export default function ResumeParser() {
                 <div className="mt-3">
                   <ResumeDropzone
                     onFileUrlChange={(fileUrl) => {
-                      console.log('changed fileUrl', fileUrl)
                       setFileUrl(fileUrl)
                       setResumeUploaded(true);
                       setEditMode('update')

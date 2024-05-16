@@ -45,7 +45,7 @@ export async function updateResume(user_id: number, resume_title: string, resume
 }
 
 export async function getResume(user_id: number, resume_id: number): Promise<ResumeInDatabase> {
-  if (resume_id === 0) return false;
+  if (resume_id === 0) throw new Error('not found');
   const config: AxiosRequestConfig = {
     baseURL: `${backendHost}/api`,
     url: `/resumes/${resume_id}`,

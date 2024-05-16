@@ -119,7 +119,7 @@ export const ResumePDF = ({
           <View
             style={{
               ...styles.flexCol,
-              padding: `${spacing[0]} ${spacing[20]}`,
+              padding: `${spacing[0]} ${spacing[3.5]}`,
             }}
           >
             {privateView === false &&

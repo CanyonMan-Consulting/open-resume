@@ -34,7 +34,7 @@ export const Resume = (props: { privateView: boolean, setPrivateView: any }) => 
         <FlexboxSpacer maxWidth={50} className="hidden md:block" />
         <div className="relative">
           <div className={cx(
-            "flex justify-center scrollbar scrollbar-track-gray-100 scrollbar-w-3 md:h-[calc(100vh-var(--top-nav-bar-height))] md:justify-end md:overflow-y-scroll",
+            "flex justify-center scrollbar scrollbar-track-gray-100 scrollbar-w-3 md:h-[calc(100vh-var(--top-nav-bar-height))]  md:overflow-y-scroll",
             isHover && "scrollbar-thumb-gray-200"
           )}>
             <ResumePDF

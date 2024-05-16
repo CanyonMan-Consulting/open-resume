@@ -42,11 +42,11 @@ export const ResumeForm = (props: { resumeTitle: string, setResumeTitle: any }) 
   return (
     <div
       className={cx(
-        "flex justify-center scrollbar scrollbar-track-gray-100 scrollbar-w-3 md:h-[calc(100vh-var(--top-nav-bar-height))] md:justify-end md:overflow-y-scroll",
+        "flex justify-center scrollbar scrollbar-w-3 md:h-[85vh] md:justify-end md:overflow-y-scroll",
         isHover && "scrollbar-thumb-gray-200"
       )}
     >
-      <section className="flex max-w-2xl flex-col gap-8 p-[var(--resume-padding)]">
+      <section className="flex flex-col gap-8 p-[var(--resume-padding)]">
         <Input
           label="Resume Title"
           labelClassName="col-span-full"

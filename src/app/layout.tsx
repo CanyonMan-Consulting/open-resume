@@ -1,7 +1,9 @@
-import "globals.css";
+import "./globals.css";
 import { TopNavBar } from "components/TopNavBar";
 import { Analytics } from "@vercel/analytics/react";
 import { ReactQueryClientProvider } from "components/ReactQueryClientProvider";
+import 'react-toastify/dist/ReactToastify.css';
+
 export const metadata = {
   title: "OpenResume - Free Open-source Resume Builder and Parser",
   description:

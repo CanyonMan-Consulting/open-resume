@@ -11,7 +11,8 @@ export type ResumeInDatabase = {
 let backendHost = 'https://localhost';
 if (typeof window !== "undefined") {
   const hostname = window && window.location && window.location.hostname;
-  if (hostname === 'app.inplaay.com') backendHost = 'https://app.inplaay.com'
+  // if (hostname === 'app.inplaay.com') backendHost = 'https://app.inplaay.com'
+  backendHost = `https://${hostname}`
 }
 export async function addResumeToUser(user_id: number, resume_title: string, resume: Resume): Promise<ResumeInDatabase> {
   const config: AxiosRequestConfig = {
@@ -44,6 +45,7 @@ export async function updateResume(user_id: number, resume_title: string, resume
 }
 
 export async function getResume(user_id: number, resume_id: number): Promise<ResumeInDatabase> {
+  if (resume_id === 0) return false;
   const config: AxiosRequestConfig = {
     baseURL: `${backendHost}/api`,
     url: `/resumes/${resume_id}`,
